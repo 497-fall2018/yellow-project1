@@ -3,5 +3,5 @@
 William Wallace
 Yahia El Bsat
 Seongsik Kim
-David Washington
 Florian Schiffers
+David Washington
