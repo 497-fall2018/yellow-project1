@@ -45,7 +45,7 @@ router.post('/comments', (req, res) => {
     // we should throw an error. we can do this check on the front end
     return res.json({
       success: false,
-      error: 'You must provide an author and comment'
+      error: 'You must provide an author and comment.'
     });
   }
   comment.author = author;
@@ -56,6 +56,33 @@ router.post('/comments', (req, res) => {
   });
 });
 
+router.put('/comments/:commentId', (req, res) => {
+    const { commentId } = req.params;
+    if (!commentId) {
+      return res.json({ success: false, error: 'No comment id provided' });
+    }
+    Comment.findById(commentId, (error, comment) => {
+      if (error) return res.json({ success: false, error });
+      const { author, text } = req.body;
+      if (author) comment.author = author;
+      if (text) comment.text = text;
+      comment.save(error => {
+        if (error) return res.json({ success: false, error });
+        return res.json({ success: true });
+      });
+    });
+  });
+
+  router.delete('/comments/:commentId', (req, res) => {
+    const { commentId } = req.params;
+    if (!commentId) {
+      return res.json({ success: false, error: 'No comment id provided' });
+    }
+    Comment.remove({ _id: commentId }, (error, comment) => {
+      if (error) return res.json({ success: false, error });
+      return res.json({ success: true });
+    });
+  });
 
 // Use our router configuration when we call /api
 app.use('/api', router);
