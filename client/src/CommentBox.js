@@ -46,19 +46,7 @@ class CommentBox extends Component {
     this.setState(newState);
   }
 
-  submitComment = (e) => {
-    e.preventDefault();
-    const { author, text } = this.state;
-    if (!author || !text) return;
-    fetch('/api/comments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ author, text }),
-    }).then(res => res.json()).then((res) => {
-      if (!res.success) this.setState({ error: res.error.message || res.error });
-      else this.setState({ author: '', text: '', error: null });
-    });
-  }
+
 
   onUpdateComment = (id) => {
     const oldComment = this.state.data.find(c => c._id === id);
@@ -129,7 +117,7 @@ class CommentBox extends Component {
     });
   }
 
-  render() {    
+  render() {
     return (
       <div className="container">
         <div className="comments">
