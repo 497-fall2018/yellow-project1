@@ -132,8 +132,9 @@ class CommentBox extends Component {
             <CommentForm
                 author={this.state.author}
                 text={this.state.text}
+								submitComment={this.submitComment}
                 handleChangeText={this.onChangeText}
-                handleSubmit={this.submitComment}
+
             />
         </div>
         {this.state.error && <p>{this.state.error}</p>}
