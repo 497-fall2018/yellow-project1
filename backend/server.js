@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import { getSecret } from './secrets';
+import Channel from './models/channel';
 import Comment from './models/comment';
 
 // and create our instances
@@ -30,6 +31,63 @@ router.get('/', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
+// Channel functions
+router.get('/channels', (req, res) => {
+  Channel.find((err, channels) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: channels });
+  });
+});
+
+router.post('/channels', (req, res) => {
+  const channel = new Channel();
+  // body parser lets us use the req.body
+  const { name } = req.body;
+  if (!channel) {
+    // we should throw an error. we can do this check on the front end
+    return res.json({
+      success: false,
+      error: 'You must provide a channel name.'
+    });
+  }
+  channel.name = name;
+  channel.save(err => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+// update the name of the channel
+router.put('/channels/:channelId', (req, res) => {
+    const { channelId } = req.params;
+    if (!channelId) {
+      return res.json({ success: false, error: 'No channel id provided' });
+    }
+    Channel.findById(channelId, (error, channel) => {
+      if (error) return res.json({ success: false, error });
+      const { name} = req.body;
+      if (name) channel.name = name;
+      channel.save(error => {
+        if (error) return res.json({ success: false, error });
+        return res.json({ success: true });
+      });
+    });
+  });
+
+  router.delete('/channels/:channelId', (req, res) => {
+    const { channelId } = req.params;
+    if (!channelId) {
+      return res.json({ success: false, error: 'No channel id provided' });
+    }
+    Channel.remove({ _id: channelId }, (error, comment) => {
+      if (error) return res.json({ success: false, error });
+      return res.json({ success: true });
+    });
+  });
+
+
+
+// Comments functions
 router.get('/comments', (req, res) => {
   Comment.find((err, comments) => {
     if (err) return res.json({ success: false, error: err });
@@ -50,6 +108,7 @@ router.post('/comments', (req, res) => {
   }
   comment.author = author;
   comment.text = text;
+  comment.channel = 'placeholder';
   comment.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
