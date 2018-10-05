@@ -89,11 +89,13 @@ router.put('/channels/:channelId', (req, res) => {
 
 // Comments functions
 router.get('/comments', (req, res) => {
-  Comment.find((err, comments) => {
+  Comment.find((err, comments) => { //https://mongoosejs.com/docs/api.html#model_Model.find
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: comments });
   });
 });
+
+
 
 router.post('/comments', (req, res) => {
   const comment = new Comment();
