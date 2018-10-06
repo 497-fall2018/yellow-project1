@@ -121,13 +121,7 @@ class CommentBox extends Component {
   render() {
     return (
       <div className="container">
-        <div className="comments"></div>
-        <div className="dropdown">
-          <span>Mouse over me</span>
-           <div class="dropdown-content">
-            <p>Hello World!</p>
-             <p>Random</p>
-           </div>
+        <div className="comments">
           <h2>Comments:</h2>
           <CommentList
             data={this.state.data}
