@@ -43,7 +43,7 @@ router.post('/channels', (req, res) => {
   const channel = new Channel();
   // body parser lets us use the req.body
   const { name } = req.body;
-  if (!channel) {
+  if (!name) {
     // we should throw an error. we can do this check on the front end
     return res.json({
       success: false,
