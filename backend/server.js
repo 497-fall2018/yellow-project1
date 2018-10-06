@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
-// Channel functions
+// ************ Channels functions ***************
 router.get('/channels', (req, res) => {
   Channel.find((err, channels) => {
     if (err) return res.json({ success: false, error: err });
@@ -87,20 +87,20 @@ router.put('/channels/:channelId', (req, res) => {
 
 
 
-// Comments functions
-router.get('/comments', (req, res) => {
-  Comment.find((err, comments) => { //https://mongoosejs.com/docs/api.html#model_Model.find
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: comments });
-  });
+// ************ Comments functions ***************
+router.get('/comments/:channelName', (req, res) => {
+ const { channelName } = req.params;
+ Comment.find({channel: channelName},(err, comments) => { //https://mongoosejs.com/docs/api.html#model_Model.find
+   if (err) return res.json({ success: false, error: err });
+   return res.json({ success: true, data: comments });
+ });
 });
-
 
 
 router.post('/comments', (req, res) => {
   const comment = new Comment();
   // body parser lets us use the req.body
-  const { author, text } = req.body;
+  const { author, text, channel } = req.body;
   if (!author || !text) {
     // we should throw an error. we can do this check on the front end
     return res.json({
@@ -110,7 +110,7 @@ router.post('/comments', (req, res) => {
   }
   comment.author = author;
   comment.text = text;
-  comment.channel = 'placeholder';
+  comment.channel = channel;
   comment.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
@@ -124,7 +124,7 @@ router.put('/comments/:commentId', (req, res) => {
     }
     Comment.findById(commentId, (error, comment) => {
       if (error) return res.json({ success: false, error });
-      const { author, text } = req.body;
+      const { author, text } = req.body; // no need to change the channel of a comment
       if (author) comment.author = author;
       if (text) comment.text = text;
       comment.save(error => {
