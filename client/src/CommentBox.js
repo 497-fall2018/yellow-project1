@@ -12,7 +12,8 @@ class CommentBox extends Component {
       data: [],
       error: null,
       author: '',
-      text: ''
+      text: '',
+      channel: '' // changing this will change the channel
     };
     this.pollInterval = null;
   }
@@ -30,9 +31,10 @@ class CommentBox extends Component {
   }
 
   loadCommentsFromServer = () => {
+    if (!this.state.channel) return;
     // fetch returns a promise. If you are not familiar with promises, see
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-    fetch('/api/comments/')
+    fetch(`/api/comments/${this.state.channel}`)
       .then(data => data.json())
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
@@ -73,8 +75,8 @@ class CommentBox extends Component {
 
   submitComment = (e) => {
     e.preventDefault();
-    const { author, text, updateId } = this.state;
-    if (!author || !text) return;
+    const { author, text, channel, updateId } = this.state;
+    if (!author || !text || !channel) return;
     if (updateId) {
       this.submitUpdatedComment();
     } else {
@@ -83,22 +85,23 @@ class CommentBox extends Component {
   }
 
   submitNewComment = () => {
-    const { author, text } = this.state;
+    const { author, text, channel } = this.state;
     const data = [
       ...this.state.data,
       {
         author,
-          text,
-          _id: Date.now().toString(),
-          updatedAt: new Date(),
-          createdAt: new Date()
+        text,
+        channel,
+        _id: Date.now().toString(),
+        updatedAt: new Date(),
+        createdAt: new Date()
       },
     ];
     this.setState({ data });
     fetch('/api/comments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ author, text }),
+      body: JSON.stringify({ author, text, channel }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
       else this.setState({ author: '', text: '', error: null });
