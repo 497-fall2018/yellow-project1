@@ -74,18 +74,19 @@ router.put('/channels/:channelId', (req, res) => {
     });
   });
 
-  router.delete('/channels/:channelId', (req, res) => {
-    const { channelId } = req.params;
-    if (!channelId) {
-      return res.json({ success: false, error: 'No channel id provided' });
+  router.delete('/channels/:channelName', (req, res) => {
+    const { channelName } = req.params;
+    if (!channelName) {
+      return res.json({ success: false, error: 'No channel name provided' });
     }
-    Channel.remove({ _id: channelId }, (error, comment) => {
+    Channel.remove({ name: channelName }, (error, chnl) => {
       if (error) return res.json({ success: false, error });
-      return res.json({ success: true });
+      Comment.remove({ channel: channelName }, (error, comment) => {
+        if (error) return res.json({ success: false, error });
+        return res.json({ success: true });
+      });
     });
   });
-
-
 
 // ************ Comments functions ***************
 router.get('/comments/:channelName', (req, res) => {

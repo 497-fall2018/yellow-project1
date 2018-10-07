@@ -1,8 +1,11 @@
 // CommentBox.js
 import React, { Component } from 'react';
+import ReactDom from 'react-dom';
+import Popup from 'react-popup';
 import 'whatwg-fetch';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
+import ChannelList from './ChannelList';
 import './CommentBox.css';
 
 class CommentBox extends Component {
@@ -13,13 +16,15 @@ class CommentBox extends Component {
       error: null,
       author: '',
       text: '',
-      channel: '' // changing this will change the channel
+      channel: '', // changing this will change the channel
+      channel_list: [] // holds a list of available channels
     };
     this.pollInterval = null;
   }
 
   componentDidMount() {
     this.loadCommentsFromServer();
+    this.loadChannelsFromServer();
     if (!this.pollInterval) {
       this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
     }
@@ -30,8 +35,60 @@ class CommentBox extends Component {
     this.pollInterval = null;
   }
 
+// ******** Channels functions *********
+  loadChannelsFromServer = () => {
+    // fetch returns a promise. If you are not familiar with promises, see
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+    fetch('/api/channels')
+      .then(data => data.json())
+      .then((res) => {
+        if (!res.success) this.setState({ error: res.error });
+        else this.setState({ channel_list: res.data });
+      });
+  }
+
+
+  onChangeChannel = (e) => {
+    e.preventDefault();
+    this.setState({
+        data: [],
+        author: '',
+        text: '',
+        channel: e.target.value
+    });
+  }
+
+// this will be rewritten to display a pop up with text input for a new channel to be created
+// http://minutemailer.github.io/react-popup/
+  onAddChannel = () => {
+    this.setState({
+        data: [],
+        author: '',
+        text: '',
+        //channel: e.target.value
+    });
+  }
+
+
+  onDeleteChannel = () => {
+    const chnl = this.state.channel;
+    this.setState({
+        data: [],
+        author: '',
+        text: '',
+        channel: ''
+    });
+    fetch(`api/channels/${chnl}`, { method: 'DELETE' })
+      .then(res => res.json()).then((res) => {
+        if (!res.success) this.setState({ error: res.error });
+        this.loadChannelsFromServer();
+      });
+  }
+
+
+// ******** Comments functions **********
   loadCommentsFromServer = () => {
-    if (!this.state.channel) return;
+    if (!this.state.channel) return; // can only show comments if a channel is selected
     // fetch returns a promise. If you are not familiar with promises, see
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
     fetch(`/api/comments/${this.state.channel}`)
@@ -41,6 +98,7 @@ class CommentBox extends Component {
         else this.setState({ data: res.data });
       });
   }
+
 
   onChangeText = (e) => {
     const newState = { ...this.state };
@@ -124,6 +182,13 @@ class CommentBox extends Component {
     return (
       <div className="container">
         <div className="comments">
+          <ChannelList
+             currChannel = {this.state.channel}
+             list = {this.state.channel_list}
+             handleChangeChannel = {this.onChangeChannel}
+             handleAddChannel = {this.onAddChannel}
+             handleDeleteChannel = {this.onDeleteChannel}
+          />
           <h2>Comments:</h2>
           <CommentList
             data={this.state.data}
@@ -137,7 +202,6 @@ class CommentBox extends Component {
                 text={this.state.text}
 								submitComment={this.submitComment}
                 handleChangeText={this.onChangeText}
-
             />
         </div>
         {this.state.error && <p>{this.state.error}</p>}
