@@ -10,7 +10,7 @@
     min-width: 160px;
     padding: 10px 10px;
     z-index: 1;
-    /* background color? */ 
+    background-color: #F5F5DC; 
 }
 
 .dropdown:hover .dropdown-content {
