@@ -34,6 +34,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-markdown": "^4.0.0",
+    "react-popup": "^0.9.3",
     "react-scripts": "2.0.3",
     "whatwg-fetch": "^3.0.0"
   },
