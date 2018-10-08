@@ -5,6 +5,7 @@
 }
 
 .dropdown-content {
+    display: none;
     position: absolute;
     min-width: 160px;
     padding: 10px 10px;
