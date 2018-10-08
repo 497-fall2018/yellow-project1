@@ -1,13 +1,14 @@
+/*DropDownMenu.css*/
 .dropdown {
     position: relative;
     display: inline-block;
 }
 
-.dropdowncontent {
+.dropdown-content {
     position: absolute;
     min-width: 160px;
     padding: 10px 10px;
-    z-index: 0;
+    z-index: 1;
     /* background color? */ 
 }
 
