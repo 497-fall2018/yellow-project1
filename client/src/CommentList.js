@@ -27,7 +27,7 @@ CommentList.propTypes = {
     author: PropTypes.string,
     id: PropTypes.string,
     text: PropTypes.string,
-    updatedAt: PropTypes.string,
+    updatedAt: PropTypes.date,
   })),
   handleDeleteComment: PropTypes.func.isRequired,
   handleUpdateComment: PropTypes.func.isRequired,
