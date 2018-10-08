@@ -122,7 +122,7 @@ class CommentBox extends Component {
     return (
       <div className="container">
         <div className="dropdown">
-           <span style="font-size:130%">Channel</span>
+           <span>Channel</span>
             <div className="dropdown-content">
               <p>First Channel</p>
               <p>Second Chnnel</p>
