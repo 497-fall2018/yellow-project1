@@ -124,9 +124,9 @@ class CommentBox extends Component {
         <div className="dropdown">
            <span>Channel</span>
             <div className="dropdown-content">
-              <p>First Channel</p>
-              <p>Second Chnnel</p>
-              <p>Random</p>
+              <button>First Channel</button>
+              <button>Second Chnnel</button>
+              <button>Random</button>
             </div>
         </div>
         <div className="comments">
