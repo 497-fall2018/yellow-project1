@@ -1,21 +1,23 @@
-<style>
 .dropdown {
     position: relative;
+    display: inline-block;
 }
 
 .dropdowncontent {
     position: absolute;
+    min-width: 160px;
+    padding: 10px 10px;
+    z-index: 0;
     /* background color? */ 
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
-</style>
-
+/*
 <div className="dropdown">
     <span>Mouse over me</span>
      <div class="dropdown-content">
       <p>Hello World!</p>
        <p>Random</p>
-     </div> 
+     </div> */

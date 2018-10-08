@@ -4,7 +4,7 @@ import 'whatwg-fetch';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import './CommentBox.css';
-//import './DropDownMenu.html';
+//import './DropDownMenu.css';
 
 class CommentBox extends Component {
   constructor() {
@@ -121,6 +121,14 @@ class CommentBox extends Component {
   render() {
     return (
       <div className="container">
+        <div className="dropdown">
+           <span>Mouse over me</span>
+            <div class="dropdown-content">
+              <p>First Channel</p>
+              <p>Second Chnnel</p>
+              <p>Random</p>
+            </div>
+        </div>
         <div className="comments">
           <h2>Comments:</h2>
           <CommentList
