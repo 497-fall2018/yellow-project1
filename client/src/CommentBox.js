@@ -121,9 +121,9 @@ class CommentBox extends Component {
   render() {
     return (
       <div className="container">
-        <div class="dropdown">
-           <span>Mouse over me</span>
-            <div class="dropdown-content">
+        <div className="dropdown">
+           <button>Channel</button>
+            <div className="dropdown-content">
               <p>First Channel</p>
               <p>Second Chnnel</p>
               <p>Random</p>
