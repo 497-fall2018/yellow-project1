@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
+import ImageForm from './ImageForm';
 import './CommentBox.css';
 
 class CommentBox extends Component {
@@ -134,12 +135,10 @@ class CommentBox extends Component {
                 text={this.state.text}
 								submitComment={this.submitComment}
                 handleChangeText={this.onChangeText}
-
             />
         </div>
         <div>
-          <label for="file_input">Choose an image to upload:  </label>
-          <input type = 'file'></input>
+          <ImageForm />
         </div>
         {this.state.error && <p>{this.state.error}</p>}
       </div>
