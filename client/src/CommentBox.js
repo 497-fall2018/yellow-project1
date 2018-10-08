@@ -137,6 +137,10 @@ class CommentBox extends Component {
 
             />
         </div>
+        <div>
+          <label for="file_input">Choose an image to upload:  </label>
+          <input type = 'file'></input>
+        </div>
         {this.state.error && <p>{this.state.error}</p>}
       </div>
     );
