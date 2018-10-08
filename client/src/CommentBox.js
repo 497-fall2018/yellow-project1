@@ -6,7 +6,6 @@ import 'whatwg-fetch';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import ImageForm from './ImageForm';
-
 import ChannelList from './ChannelList';
 import './CommentBox.css';
 
@@ -208,10 +207,6 @@ class CommentBox extends Component {
         </div>
         <div className="form">
             <CommentForm
-              author={this.state.author}
-              text={this.state.text}
-              submitComment={this.submitComment}
-              handleChangeText={this.onChangeText}
                 author={this.state.author}
                 text={this.state.text}
 								submitComment={this.submitComment}
