@@ -13,7 +13,8 @@ class CommentBox extends Component {
       data: [],
       error: null,
       author: '',
-      text: ''
+      text: '',
+      imagefile: null,
     };
     this.pollInterval = null;
   }
@@ -46,7 +47,6 @@ class CommentBox extends Component {
     newState[e.target.name] = e.target.value;
     this.setState(newState);
   }
-
 
 
   onUpdateComment = (id) => {
@@ -118,6 +118,14 @@ class CommentBox extends Component {
     });
   }
 
+  uploadImage = () =>{
+    console.log("uploading image");
+  }
+
+  onChangeImage = () => {
+    console.log("image value changed");
+  }
+
   render() {
     return (
       <div className="container">
@@ -131,14 +139,17 @@ class CommentBox extends Component {
         </div>
         <div className="form">
             <CommentForm
-                author={this.state.author}
-                text={this.state.text}
-								submitComment={this.submitComment}
-                handleChangeText={this.onChangeText}
+              author={this.state.author}
+              text={this.state.text}
+              submitComment={this.submitComment}
+              handleChangeText={this.onChangeText}
             />
         </div>
         <div>
-          <ImageForm />
+          <ImageForm 
+            uploadImage = {this.uploadImage}
+            handleChangeImage = {this.onChangeImage}
+          />
         </div>
         {this.state.error && <p>{this.state.error}</p>}
       </div>
