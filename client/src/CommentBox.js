@@ -206,11 +206,15 @@ class CommentBox extends Component {
   }
 
   uploadImage = () =>{
-    console.log("uploading image");
+    const { imagefile } = this.state;
   }
 
-  onChangeImage = () => {
-    console.log("image value changed");
+  onChangeImage = (selectorFiles) => {
+    const newState = { ...this.state };
+    // newState[e.target.imagefile] = e.target.value;
+    this.setState(newState);
+
+    console.log(selectorFiles.target.files);
   }
 
   render() {
@@ -244,6 +248,7 @@ class CommentBox extends Component {
           <ImageForm 
             uploadImage = {this.uploadImage}
             handleChangeImage = {this.onChangeImage}
+            imagefile = {this.imagefile}
           />
         </div>
         {this.state.error && <p>{this.state.error}</p>}
