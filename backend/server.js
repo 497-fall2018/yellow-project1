@@ -118,6 +118,25 @@ router.post('/comments', (req, res) => {
   });
 });
 
+router.post('/upload-images', (req, res) => {
+		const comment = new Comment();
+		
+		const { author, channel, imageFile} = req.body;
+		if (!author || !imagefile) {
+				return res.json({
+					success: false,
+					error: 'this is a test error.'
+				});
+		}
+		comment.author = author;
+		comment.imageFile = imageFile;
+		comment.channel = channel;
+		comment.save(err => {
+			if (err) return res.json({success: false, error: err});
+			return res.json({success: true});
+		});
+});
+
 router.put('/comments/:commentId', (req, res) => {
     const { commentId } = req.params;
     if (!commentId) {
@@ -135,16 +154,16 @@ router.put('/comments/:commentId', (req, res) => {
     });
   });
 
-  router.delete('/comments/:commentId', (req, res) => {
-    const { commentId } = req.params;
-    if (!commentId) {
-      return res.json({ success: false, error: 'No comment id provided' });
-    }
-    Comment.remove({ _id: commentId }, (error, comment) => {
-      if (error) return res.json({ success: false, error });
-      return res.json({ success: true });
-    });
-  });
+router.delete('/comments/:commentId', (req, res) => {
+	const { commentId } = req.params;
+	if (!commentId) {
+		return res.json({ success: false, error: 'No comment id provided' });
+	}
+	Comment.remove({ _id: commentId }, (error, comment) => {
+		if (error) return res.json({ success: false, error });
+		return res.json({ success: true });
+	});
+});
 
 // Use our router configuration when we call /api
 app.use('/api', router);

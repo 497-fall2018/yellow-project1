@@ -16,12 +16,8 @@ class CommentBox extends Component {
       error: null,
       author: '',
       text: '',
-<<<<<<< HEAD
-      imagefile: null,
+      imageFile: null,
       channel: '', // changing this will change the channel
-=======
-      channel: '',
->>>>>>> 15c4b55b168cded90bb11c0804d1df0afda77899
       channel_list: [] // holds a list of available channels
     };
     this.pollInterval = null;
@@ -195,6 +191,7 @@ class CommentBox extends Component {
 
   submitUpdatedComment = () => {
     const { author, text, updateId } = this.state;
+
     fetch(`/api/comments/${updateId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -206,7 +203,30 @@ class CommentBox extends Component {
   }
 
   uploadImage = () =>{
-    const { imagefile } = this.state;
+    const { author, imageFile, channel } = this.state;
+		const data = [
+      ...this.state.data,
+      {
+        author,
+				channel,
+				imageFile,
+        _id: Date.now().toString(),
+        updatedAt: new Date(),
+        createdAt: new Date()
+      },
+    ];
+		this.setState({ data });
+		
+		fetch('/api/image-upload',{
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json'},
+			body: JSON.stringify({author, channel, imageFile}),
+		}).then(res => res.json()).then((res) => {
+			if (!res.success) this.setState({ error: res.error.message || res.error });
+      else this.setState({ imageFile: null, author: '', error: null });
+		});
+	
+		
   }
 
   onChangeImage = (selectorFiles) => {
@@ -248,7 +268,7 @@ class CommentBox extends Component {
           <ImageForm 
             uploadImage = {this.uploadImage}
             handleChangeImage = {this.onChangeImage}
-            imagefile = {this.imagefile}
+            imageFile = {this.imageFile}
           />
         </div>
         {this.state.error && <p>{this.state.error}</p>}

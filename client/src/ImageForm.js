@@ -16,6 +16,10 @@ const ImageForm = props => (
   </form>
 );
 
+ImageForm.uploadHandler = {
+	
+};
+
 ImageForm.propTypes = {
   uploadImage: PropTypes.func.isRequired,
   handleChangeImage: PropTypes.func.isRequired,
