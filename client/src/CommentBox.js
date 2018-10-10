@@ -1,12 +1,11 @@
 // CommentBox.js
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
-import Popup from 'react-popup';
 import 'whatwg-fetch';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import ImageForm from './ImageForm';
 import ChannelList from './ChannelList';
+import Popup from './popup';
 import './CommentBox.css';
 
 class CommentBox extends Component {
@@ -17,8 +16,12 @@ class CommentBox extends Component {
       error: null,
       author: '',
       text: '',
+<<<<<<< HEAD
       imagefile: null,
       channel: '', // changing this will change the channel
+=======
+      channel: '',
+>>>>>>> 15c4b55b168cded90bb11c0804d1df0afda77899
       channel_list: [] // holds a list of available channels
     };
     this.pollInterval = null;
@@ -63,17 +66,40 @@ class CommentBox extends Component {
 // this will be rewritten to display a pop up with text input for a new channel to be created
 // http://minutemailer.github.io/react-popup/
   onAddChannel = () => {
-    this.setState({
-        data: [],
-        author: '',
-        text: '',
-        //channel: e.target.value
-    });
-  }
+    Popup.plugins().prompt('', 'New Channel Name', function (name) {
+        if (!name) return;
+        else if (this.state.channel_list.filter(e => e.name === name).length > 0) {
+          this.setState({
+              data: [],
+              author: '',
+              text: '',
+              channel: name
+          });
+        }
+        else fetch('/api/channels', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name }),
+        }).then(res => res.json()).then((res) => {
+          if (!res.success) this.setState({ error: res.error.message || res.error });
+          else {
+            this.loadChannelsFromServer();
+            this.setState({
+                data: [],
+                author: '',
+                text: '',
+                channel: name,
+                error: null
+            });
+          }
+        });
 
+    }.bind(this));
+  }
 
   onDeleteChannel = () => {
     const chnl = this.state.channel;
+    if (chnl === '') return;
     this.setState({
         data: [],
         author: '',
@@ -191,6 +217,7 @@ class CommentBox extends Component {
     return (
       <div className="container">
         <div className="comments">
+          <Popup />
           <ChannelList
              currChannel = {this.state.channel}
              list = {this.state.channel_list}
