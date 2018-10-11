@@ -59,8 +59,7 @@ class CommentBox extends Component {
     });
   }
 
-// this will be rewritten to display a pop up with text input for a new channel to be created
-// http://minutemailer.github.io/react-popup/
+
   onAddChannel = () => {
     Popup.plugins().prompt('', 'New Channel Name', function (name) {
         if (!name) return;
@@ -159,8 +158,9 @@ class CommentBox extends Component {
 
   submitComment = (e) => {
     e.preventDefault();
-    const { author, text, channel, updateId } = this.state;
-    if (!author || !text || !channel) return;
+    const { author, text, imageFile, channel, updateId } = this.state;
+    if (!author || !channel) return;
+    if (!(text || imageFile)) return;
     if (updateId) {
       this.submitUpdatedComment();
     } else {
@@ -169,19 +169,22 @@ class CommentBox extends Component {
   }
 
   submitNewComment = () => {
-    const { author, text, channel } = this.state;
+    const { author, text, channel, imageFile } = this.state;
     const data = [
       ...this.state.data,
       {
         author,
         text,
         channel,
+        imageFile,
         _id: Date.now().toString(),
         updatedAt: new Date(),
         createdAt: new Date()
       },
     ];
     this.setState({ data });
+    //const formData = new FormData();
+    //formData.append('File', imageFile);
     fetch('/api/comments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -207,12 +210,13 @@ class CommentBox extends Component {
 
   uploadImage = (e) =>{
     e.preventDefault();
-    //console.log(this.state);
-    const { author, imageFile, channel } = this.state;
-		const data = [
+    const { author, text, imageFile, channel } = this.state;
+    if (!imageFile || !channel) return; // ensure this is used only to submit an Image File when it exists and has a channel
+    const data = [
       ...this.state.data,
       {
         author,
+        text,
 				channel,
 				imageFile,
         _id: Date.now().toString(),
@@ -226,7 +230,7 @@ class CommentBox extends Component {
 		fetch('/api/upload-image',{
 			method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ formData })
+      body: JSON.stringify({ author, text, channel }) // this is still missing formData to be uploaded in the right format.
 		}).then(res => res.json()).then((res) => {
       console.log(res)
       if (!res.success) this.setState({ error: res.error.message || res.error });
