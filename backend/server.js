@@ -118,10 +118,10 @@ router.post('/comments', (req, res) => {
   });
 });
 
-router.post('/upload-images', (req, res) => {
+router.post('/upload-image', (req, res) => {
 		return res.json({success:true});
 		const comment = new Comment();
-		
+
 		const { imageFile} = req.body;
 		if (!author || !imagefile) {
 				return res.json({
