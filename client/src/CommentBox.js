@@ -227,10 +227,12 @@ class CommentBox extends Component {
 		this.setState({ data });
 		const formData = new FormData()
 		formData.append('myFile', this.state.imageFile)
+		formData.append('author', this.state.author)
+		formData.append('channel', this.state.channel)
 		fetch('/api/upload-image',{
 			method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ author, text, channel }) // this is still missing formData to be uploaded in the right format.
+      //headers: { 'Content-Type': 'image/jpeg' },
+      body: formData //JSON.stringify({ author, text, channel }) // this is still missing formData to be uploaded in the right format.
 		}).then(res => res.json()).then((res) => {
       console.log(res)
       if (!res.success) this.setState({ error: res.error.message || res.error });

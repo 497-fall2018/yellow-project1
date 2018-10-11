@@ -146,14 +146,18 @@ router.delete('/comments/:commentId', (req, res) => {
 	});
 });
 
-// ************ Upload Image ***************
-router.post('/upload-image', (req, res) => {
-		return res.json({success:true});
-		const comment = new Comment();
 
-		const { imageFile} = req.body;
-		if (!author || !imagefile) {
+let multer = require('multer');
+let upload = multer();
+// ************ Upload Image ***************
+router.post('/upload-image', upload.any(), (req, res) => {
+//	return res.json({success:true});
+		const comment = new Comment();
+		let formData = req.body;
+//		const { imageFile} = req.body;
+		if (true) {
 				return res.json({
+					reques: formData,
 					success: false,
 					error: 'this is a test error.'
 				});
@@ -161,6 +165,7 @@ router.post('/upload-image', (req, res) => {
 		//comment.author = author;
 		comment.imageFile = imageFile;
 		//comment.channel = channel;
+		return res.json({success:true});
 		comment.save(err => {
 			if (err) return res.json({success: false, error: err});
 			return res.json({success: true});
