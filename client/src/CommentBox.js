@@ -205,8 +205,9 @@ class CommentBox extends Component {
     });
   }
 
-  uploadImage = () =>{
-		console.log(this.state);
+  uploadImage = (e) =>{
+    e.preventDefault();
+    console.log(this.state);
     const { author, imageFile, channel } = this.state;
 		const data = [
       ...this.state.data,
@@ -226,14 +227,14 @@ class CommentBox extends Component {
 		console.log(formData);
 		fetch('/api/image-upload',{
 			method: 'POST',
-			//	headers: { 'Content-Type': 'application/json'},	
+			//	headers: { 'Content-Type': 'application/json'},
 			body: formData,
 		}).then(res => res.json()).then((res) => {
 			if (!res.success) this.setState({ error: res.error.message || res.error });
       else this.setState({ imageFile: null, author: '', error: null });
 		});
-	
-		
+
+
   }
 
   onChangeImage = (selectorFiles) => {
@@ -274,10 +275,10 @@ class CommentBox extends Component {
             />
         </div>
         <div>
-          <ImageForm 
+          <ImageForm
             uploadImage = {this.uploadImage}
             handleChangeImage = {this.onChangeImage}
-            imageFile = {this.imageFile}
+            imageFile = {this.state.imageFile}
           />
         </div>
         {this.state.error && <p>{this.state.error}</p>}

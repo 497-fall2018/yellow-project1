@@ -23,7 +23,7 @@ const Comment = props => (
 
 Comment.propTypes = {
   author: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+  //children: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   handleUpdateComment: PropTypes.func.isRequired,
   handleDeleteComment: PropTypes.func.isRequired,
