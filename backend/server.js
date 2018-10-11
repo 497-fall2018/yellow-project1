@@ -119,18 +119,19 @@ router.post('/comments', (req, res) => {
 });
 
 router.post('/upload-images', (req, res) => {
+		return res.json({success:true});
 		const comment = new Comment();
 		
-		const { author, channel, imageFile} = req.body;
+		const { imageFile} = req.body;
 		if (!author || !imagefile) {
 				return res.json({
 					success: false,
 					error: 'this is a test error.'
 				});
 		}
-		comment.author = author;
+		//comment.author = author;
 		comment.imageFile = imageFile;
-		comment.channel = channel;
+		//comment.channel = channel;
 		comment.save(err => {
 			if (err) return res.json({success: false, error: err});
 			return res.json({success: true});

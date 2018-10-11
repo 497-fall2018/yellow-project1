@@ -126,8 +126,11 @@ class CommentBox extends Component {
 
   onChangeText = (e) => {
     const newState = { ...this.state };
+		console.log("before");
+		console.log(newState);
     newState[e.target.name] = e.target.value;
-    this.setState(newState);
+    console.log(newState);
+		this.setState(newState);
   }
 
 
@@ -203,6 +206,7 @@ class CommentBox extends Component {
   }
 
   uploadImage = () =>{
+		console.log(this.state);
     const { author, imageFile, channel } = this.state;
 		const data = [
       ...this.state.data,
@@ -216,11 +220,14 @@ class CommentBox extends Component {
       },
     ];
 		this.setState({ data });
-		
+		const formData = new FormData()
+		formData.append('myFile', imageFile)
+		console.log("forma data is here");
+		console.log(formData);
 		fetch('/api/image-upload',{
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json'},
-			body: JSON.stringify({author, channel, imageFile}),
+			//	headers: { 'Content-Type': 'application/json'},	
+			body: formData,
 		}).then(res => res.json()).then((res) => {
 			if (!res.success) this.setState({ error: res.error.message || res.error });
       else this.setState({ imageFile: null, author: '', error: null });
@@ -230,10 +237,12 @@ class CommentBox extends Component {
   }
 
   onChangeImage = (selectorFiles) => {
-    const newState = { ...this.state };
-    // newState[e.target.imagefile] = e.target.value;
-    this.setState(newState);
 
+    const newState = { ...this.state };
+    newState["imageFile"] = selectorFiles.target.files[0];
+    this.setState(newState);
+/* 		console.log('onChangeImage');
+		console.log(this.state); */
     console.log(selectorFiles.target.files);
   }
 

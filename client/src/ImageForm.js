@@ -7,8 +7,8 @@ const ImageForm = props => (
     <label>Upload an image: </label> 
     <input 
         type="file"
-        name = "imagefile"
-        // value = {props.imagefile}
+        name = "imageFile"
+        value = {props.imagefile}
         onChange={props.handleChangeImage} 
         
     />
@@ -23,12 +23,12 @@ ImageForm.uploadHandler = {
 ImageForm.propTypes = {
   uploadImage: PropTypes.func.isRequired,
   handleChangeImage: PropTypes.func.isRequired,
-  imagefile: PropTypes.string ,
+  //imageFile: PropTypes.string ,
 //   author: PropTypes.string,
 };
 
 ImageForm.defaultProps = {
-  imagefile: '',
+  imageFile: null,
 //   author: '',
 };
 
