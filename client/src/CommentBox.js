@@ -17,6 +17,7 @@ class CommentBox extends Component {
       author: '',
       text: '',
       imageFile: null,
+      imagesrc: null,
       channel: '', // changing this will change the channel
       channel_list: [] // holds a list of available channels
     };
@@ -245,12 +246,13 @@ class CommentBox extends Component {
   onChangeImage = (selectorFiles) => {
     const newState = { ...this.state };
     newState["imageFile"] = selectorFiles.target.files[0];
+    newState["imagesrc"] = ('data:image/jpeg;base64,' + btoa(selectorFiles.target.files[0]["buffer"])).toString();
     this.setState(newState);
   }
 
   
   render() {
-    console.log("what is tye: ", typeof(this.state.imageFile));
+    console.log("what is itttt: ", (this.state.imagesrc));
     return (  
       <div className="container">
         <div className="comments">
@@ -267,6 +269,7 @@ class CommentBox extends Component {
             data={this.state.data}
             handleDeleteComment={this.onDeleteComment}
             handleUpdateComment={this.onUpdateComment}
+            imageurl = {this.imagesrc}
           />
         </div>
         <div className="form">
