@@ -150,22 +150,25 @@ router.delete('/comments/:commentId', (req, res) => {
 let multer = require('multer');
 let upload = multer();
 // ************ Upload Image ***************
-router.post('/upload-image', upload.any(), (req, res) => {
+router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
 //	return res.json({success:true});
-		const comment = new Comment();
-		let formData = req.body;
+		var comment = new Comment();
+		let formData = req.file;
+		let metaData = req.body;
 //		const { imageFile} = req.body;
-		if (true) {
+		if (!formData) {
 				return res.json({
-					reques: formData,
+					filestuff: formData,
+					otherstuff: metaData,
 					success: false,
 					error: 'this is a test error.'
 				});
 		}
-		//comment.author = author;
-		comment.imageFile = imageFile;
-		//comment.channel = channel;
-		return res.json({success:true});
+		comment.author = metaData["author"];
+		comment.imageFile = "test";
+		comment.channel = metaData["channel"];
+		return res.json({success:true,
+										thecomment: comment});	
 		comment.save(err => {
 			if (err) return res.json({success: false, error: err});
 			return res.json({success: true});
