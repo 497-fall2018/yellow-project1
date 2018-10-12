@@ -16,7 +16,7 @@ const CommentList = (props) => {
     </Comment>
   ));
   return (
-    <div>
+    <div className="AllComment">
       { commentNodes }
     </div>
   );

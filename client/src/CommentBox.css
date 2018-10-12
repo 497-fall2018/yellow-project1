@@ -8,7 +8,6 @@
     flex-flow: column nowrap;
     align-items: center;
     justify-content: space-between;
-
   }
 
   .comments {
@@ -316,4 +315,40 @@
           text-align: center;
           margin-top: 10px;
       }
+      
+  }
+  @media only screen and (min-width: 0px) {
+  .ChannelSection {
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px;
+}
+.ChannelDropdown {
+    font-size: 24px;
+    background-color: #c5baba69;
+    border-radius: 24px;
+    border: 1px solid;
+}
+
+.Button {
+    height: 36px;
+    width: 36px;
+    border-radius: 100%;
+    border: 1px;
+    font-size: 24px;
+    display: inline-block;
+    margin-left: 30px;
+    text-align: center;
+}
+.AddButton {
+    background-color: hsla(120, 69%, 67%, 0.719);
+}
+.DelButton {
+    background-color: #f7797998;
+}
+
+.AllComment {
+    overflow-y: scroll;
+    height: 400px;
+}
   }
