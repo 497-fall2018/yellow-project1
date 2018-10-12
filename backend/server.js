@@ -9,6 +9,10 @@ import { getSecret } from './secrets';
 import Channel from './models/channel';
 import Comment from './models/comment';
 
+// multer
+let multer = require('multer');
+let upload = multer();
+
 // and create our instances
 const app = express();
 const router = express.Router();
@@ -146,9 +150,6 @@ router.delete('/comments/:commentId', (req, res) => {
 	});
 });
 
-
-let multer = require('multer');
-let upload = multer();
 // ************ Upload Image ***************
 router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
 //	return res.json({success:true});
@@ -163,18 +164,16 @@ router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
 					success: false,
 					error: 'this is a test error.'
 				});
-		}
+    }
+    console.log("thisis form: ",formData);
 		comment.author = metaData["author"];
-		comment.imageFile = "test";
+		comment.imageFile = formData["buffer"];
 		comment.channel = metaData["channel"];
-		return res.json({success:true,
-										thecomment: comment});	
 		comment.save(err => {
 			if (err) return res.json({success: false, error: err});
 			return res.json({success: true});
 		});
 });
-
 
 
 // Use our router configuration when we call /api
