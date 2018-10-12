@@ -171,7 +171,8 @@ router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
     console.log("thisis form: ",formData["buffer"]);
 		comment.author = author;
     comment.imageFile = formData["buffer"];
-		comment.channel = channel;
+    comment.channel = channel;
+    // return res.json({success: true, imageFile: comment.imageFile});
 		comment.save(err => {
 			if (err) return res.json({success: false, error: err});
 			return res.json({success: true});
