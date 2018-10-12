@@ -9,7 +9,7 @@ const CommentsSchema = new Schema({
   author: String,
   text: String,
   channel: String, // gives which channel comment is part of
-	imageFile: Buffer, // not sure what this should be...
+  imageFile: Buffer, // not sure what this should be...
 }, { timestamps: true });
 
 // export our module to use in server.js

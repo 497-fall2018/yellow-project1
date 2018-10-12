@@ -248,8 +248,10 @@ class CommentBox extends Component {
     this.setState(newState);
   }
 
+  
   render() {
-    return (
+    console.log("what is tye: ", typeof(this.state.imageFile));
+    return (  
       <div className="container">
         <div className="comments">
           <Popup />

@@ -4,7 +4,8 @@ import Comment from './Comment';
 
 const CommentList = (props) => {
   const commentNodes = props.data.map(comment => (
-    <Comment
+    <div>
+      <Comment
       author={comment.author}
       key={comment._id}
       id={comment._id}
@@ -12,8 +13,11 @@ const CommentList = (props) => {
       handleUpdateComment={props.handleUpdateComment}
       handleDeleteComment={props.handleDeleteComment}
     >
-      { comment.text}
+      
+      { comment.text }
     </Comment>
+    </div>
+    
   ));
   return (
     <div>
@@ -22,12 +26,14 @@ const CommentList = (props) => {
   );
 };
 
+
 CommentList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     author: PropTypes.string,
     id: PropTypes.string,
     text: PropTypes.string,
     updatedAt: PropTypes.date,
+    imagecomment: PropTypes.object,
   })),
   handleDeleteComment: PropTypes.func.isRequired,
   handleUpdateComment: PropTypes.func.isRequired,

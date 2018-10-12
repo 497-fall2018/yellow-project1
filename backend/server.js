@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import { getSecret } from './secrets';
 import Channel from './models/channel';
 import Comment from './models/comment';
+import { strict } from 'assert';
 
 // multer
 let multer = require('multer');
@@ -157,7 +158,9 @@ router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
 		let formData = req.file;
 		let metaData = req.body;
 //		const { imageFile} = req.body;
-		if (!formData) {
+    var author = metaData["author"];
+    var channel = metaData["channel"];
+		if (!formData || !channel || !author) {
 				return res.json({
 					filestuff: formData,
 					otherstuff: metaData,
@@ -165,10 +168,10 @@ router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
 					error: 'this is a test error.'
 				});
     }
-    console.log("thisis form: ",formData);
-		comment.author = metaData["author"];
-		comment.imageFile = formData["buffer"];
-		comment.channel = metaData["channel"];
+    console.log("thisis form: ",formData["buffer"]);
+		comment.author = author;
+    comment.imageFile = formData["buffer"];
+		comment.channel = channel;
 		comment.save(err => {
 			if (err) return res.json({success: false, error: err});
 			return res.json({success: true});
