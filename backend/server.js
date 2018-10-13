@@ -151,26 +151,41 @@ router.delete('/comments/:commentId', (req, res) => {
 	});
 });
 
+
+// router.post('/comments', (req, res) => {
+//   const comment = new Comment();
+//   // body parser lets us use the req.body
+//   const { author, text, channel } = req.body;
+//   if (!author || !text) {
+//     // we should throw an error. we can do this check on the front end
+//     return res.json({
+//       success: false,
+//       error: 'You must provide an author and comment.'
+//     });
+//   }
+//   comment.author = author;
+//   comment.text = text;
+//   comment.channel = channel;
+//   comment.save(err => {
+//     if (err) return res.json({ success: false, error: err });
+//     return res.json({ success: true });
+//   });
+// });
+
 // ************ Upload Image ***************
 router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
 //	return res.json({success:true});
 		var comment = new Comment();
-		let formData = req.file;
-		let metaData = req.body;
-//		const { imageFile} = req.body;
-    var author = metaData["author"];
-    var channel = metaData["channel"];
-		if (!formData || !channel || !author) {
+		const { imageFile , author, channel } = req.body;
+
+		if (!imageFile || !channel || !author) {
 				return res.json({
-					filestuff: formData,
-					otherstuff: metaData,
 					success: false,
 					error: 'this is a test error.'
 				});
     }
-    console.log("thisis form: ",formData["buffer"]);
 		comment.author = author;
-    comment.imageFile = formData["buffer"];
+    comment.imageFile = imageFile;
     comment.channel = channel;
     // return res.json({success: true, imageFile: comment.imageFile});
 		comment.save(err => {
