@@ -9,14 +9,16 @@ const CommentList = (props) => {
       author={comment.author}
       key={comment._id}
       id={comment._id}
-      imageurl = "http://tineye.com/images/widgets/mona.jpg"
+      imageurl = {comment.imageFile}
       timestamp={comment.updatedAt}
       handleUpdateComment={props.handleUpdateComment}
       handleDeleteComment={props.handleDeleteComment}
     >
       
       { comment.text }
+      
     </Comment>
+    
     </div>
     
   ));
