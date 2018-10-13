@@ -243,13 +243,12 @@ class CommentBox extends Component {
 
   }
 
-  onChangeImage = (selectorFiles) => {
+  onChangeImage = (e) => {
     const newState = { ...this.state };
-    newState["imageFile"] = selectorFiles.target.files[0];
-    newState["imagesrc"] = ('data:image/jpeg;base64,' + btoa(selectorFiles.target.files[0]["buffer"])).toString();
+    newState["imageFile"] = e.target.value;
+    console.log(newState["imageFile"]);
     this.setState(newState);
   }
-
   
   render() {
     console.log("what is itttt: ", (this.state.imagesrc));
