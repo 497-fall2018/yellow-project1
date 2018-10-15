@@ -10,6 +10,7 @@ const Comment = props => (
     <div className="textContent">
       <div className="singleCommentContent">
         <h3>{props.author}</h3>
+        <img src = {props.imageurl} />
         <ReactMarkdown source={props.children} />
       </div>
       <div className="singleCommentButtons">
@@ -23,8 +24,8 @@ const Comment = props => (
 
 Comment.propTypes = {
   author: PropTypes.string.isRequired,
-  //children: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  imageurl: PropTypes.string.isRequired,
   handleUpdateComment: PropTypes.func.isRequired,
   handleDeleteComment: PropTypes.func.isRequired,
 };

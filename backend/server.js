@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import { getSecret } from './secrets';
 import Channel from './models/channel';
 import Comment from './models/comment';
+import { strict } from 'assert';
 
 // multer
 let multer = require('multer');
@@ -154,21 +155,18 @@ router.delete('/comments/:commentId', (req, res) => {
 router.post('/upload-image', upload.single('myFile'), (req, res, next) => {
 //	return res.json({success:true});
 		var comment = new Comment();
-		let formData = req.file;
-		let metaData = req.body;
-//		const { imageFile} = req.body;
-		if (!formData) {
+		const { imageFile , author, channel } = req.body;
+
+		if (!imageFile || !channel || !author) {
 				return res.json({
-					filestuff: formData,
-					otherstuff: metaData,
 					success: false,
 					error: 'this is a test error.'
 				});
     }
-    console.log("thisis form: ",formData);
-		comment.author = metaData["author"];
-		comment.imageFile = formData["buffer"];
-		comment.channel = metaData["channel"];
+		comment.author = author;
+    comment.imageFile = imageFile;
+    comment.channel = channel;
+    // return res.json({success: true, imageFile: comment.imageFile});
 		comment.save(err => {
 			if (err) return res.json({success: false, error: err});
 			return res.json({success: true});
