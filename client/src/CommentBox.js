@@ -16,12 +16,8 @@ class CommentBox extends Component {
       error: null,
       author: '',
       text: '',
-<<<<<<< HEAD
       imagefile: null,
       channel: '', // changing this will change the channel
-=======
-      channel: '',
->>>>>>> 15c4b55b168cded90bb11c0804d1df0afda77899
       channel_list: [] // holds a list of available channels
     };
     this.pollInterval = null;
