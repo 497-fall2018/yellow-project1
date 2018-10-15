@@ -6,15 +6,15 @@ const ChannelList = (props) => {
     <option value={chnl.name} key={chnl._id}>{chnl.name}</option>
   ));
   return (
-    <div>
+    <div className="ChannelSection">
       <form>
-        <select value={props.currChannel} onChange={props.handleChangeChannel}>
+        <select className="ChannelDropdown" value={props.currChannel} onChange={props.handleChangeChannel}>
           <option value="">Select a Channel</option>
           {channels}
         </select>
       </form>
-      <button type="button" onClick={() => { props.handleAddChannel(); }}>Add</button>
-      <button type="button" onClick={() => { props.handleDeleteChannel(); }}>Remove</button>
+      <button type="button" className="AddButton Button" onClick={() => { props.handleAddChannel(); }}>+</button>
+      <button type="button" className="DelButton Button" onClick={() => { props.handleDeleteChannel(); }}>-</button>
     </div>
   );
 };
