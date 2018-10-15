@@ -13,7 +13,7 @@
   .comments {
     overflow: auto;
     width: 75%;
-    max-width: 1500px;
+    max-width: 700px;
     min-width: 300px;
 
   }
@@ -92,7 +92,7 @@
 
   .form form {
     display: flex;
-    padding: 15px 0;
+    padding: 10px 0;
   }
 
   .form input {
