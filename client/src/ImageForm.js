@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 
 const ImageForm = props => (
   <form onSubmit={props.uploadImage}>
-    <label>Upload an image url: </label>
     <input
         type="text"
         name = "imageFile"
+        placeholder = "Upload an image URL"
         value = {props.imagefile}
-        onChange={props.handleChangeImage} 
+        onChange={props.handleChangeImage}
     />
     <button type="upload">Upload</button>
   </form>

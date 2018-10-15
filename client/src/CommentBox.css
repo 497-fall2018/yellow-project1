@@ -20,7 +20,7 @@
 
   .comments h2 {
     font-weight: 300;
-  
+
 }
 
   .singleComment {
@@ -35,9 +35,14 @@
     border-radius: 25px;
     padding: 10px;
     display: inline-flex;
-		
+
   }
-	
+
+  .imageComment {
+    max-width: 300px;
+    max-height: 200px;
+    object-fit: scale-down;
+  }
 
 
   .userImage {
@@ -320,7 +325,7 @@
           text-align: center;
           margin-top: 10px;
       }
-      
+
   }
   @media only screen and (min-width: 0px) {
   .ChannelSection {
@@ -354,6 +359,6 @@
 
 .AllComment {
     overflow-y: scroll;
-    height: 400px;
+    height: 450px;
 }
   }

@@ -168,7 +168,7 @@ class CommentBox extends Component {
     }
   }
 
- 
+
 
   submitUpdatedComment = () => {
     const { author, text, updateId } = this.state;
@@ -249,9 +249,9 @@ class CommentBox extends Component {
     console.log(newState["imageFile"]);
     this.setState(newState);
   }
-  
+
   render() {
-    return (  
+    return (
       <div className="container">
         <div className="comments">
           <Popup />
@@ -277,13 +277,11 @@ class CommentBox extends Component {
 								submitComment={this.submitComment}
                 handleChangeText={this.onChangeText}
             />
-        </div>
-        <div>
-          <ImageForm
-            uploadImage = {this.uploadImage}
-            handleChangeImage = {this.onChangeImage}
-            imageFile = {this.state.imageFile}
-          />
+            <ImageForm
+              uploadImage = {this.uploadImage}
+              handleChangeImage = {this.onChangeImage}
+              imageFile = {this.state.imageFile}
+            />
         </div>
         {this.state.error && <p>{this.state.error}</p>}
       </div>

@@ -10,7 +10,7 @@ const Comment = props => (
     <div className="textContent">
       <div className="singleCommentContent">
         <h3>{props.author}</h3>
-        <img src = {props.imageurl} />
+        <img className = "imageComment" src = {props.imageurl} />
         <ReactMarkdown source={props.children} />
       </div>
       <div className="singleCommentButtons">
